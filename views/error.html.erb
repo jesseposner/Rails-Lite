@@ -1,0 +1,10 @@
+<h2>Errors</h2>
+<%= "#{@error.backtrace}: #{@error.message} (#{@error.class})" %>
+<p>
+<% @source_code.each_with_index do |line, i| %>
+  <% if i == @line_number - 1 %>
+    <h3><%= line %></h3><br>
+  <% else %>
+    <%= line %><br>
+  <% end %>
+<% end %>

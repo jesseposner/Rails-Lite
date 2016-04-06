@@ -60,7 +60,7 @@ class ControllerBase
   end
 
   def flash
-    @flash ||= Flash.new(@req)
+    @flash ||= Flash.new(@req, @res)
   end
 
   # use this with the router to call action_name (:index, :show, :create...)

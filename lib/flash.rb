@@ -4,7 +4,7 @@ require 'byebug'
 class Flash
   attr_reader :now
 
-  def initialize(req)
+  def initialize(req, res)
     @now = {}
     @cookie = {}
     if req.cookies["flash"]
