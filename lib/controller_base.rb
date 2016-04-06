@@ -8,9 +8,11 @@ class ControllerBase
   attr_reader :req, :res, :params
 
   # Setup the controller
-  def initialize(req, res)
+  def initialize(req, res, route_params = {})
+    @params = req.params.merge(route_params)
     @req = req
     @res = res
+    flash
   end
 
   # Helper method to alias @already_built_response
@@ -25,6 +27,7 @@ class ControllerBase
     @res.status = 302
     @already_built_response = true
     session.store_session(@res)
+    flash.store_session(@res)
   end
 
   # Populate the response with content.
@@ -36,12 +39,14 @@ class ControllerBase
     @res.write(content)
     @already_built_response = true
     session.store_session(@res)
+    flash.store_session(@res)
   end
 
   # use ERB and binding to evaluate templates
   # pass the rendered html to render_content
   def render(template_name)
-    file_path = "views/#{self.class.to_s.underscore}/#{template_name}.html.erb"
+    file_path =
+      "views/#{self.class.to_s.underscore}/#{template_name}.html.erb"
     file_content = File.read(file_path)
     template = ERB.new(file_content)
     content = template.result(binding)
@@ -53,7 +58,13 @@ class ControllerBase
     @session ||= Session.new(@req)
   end
 
+  def flash
+    @flash ||= Flash.new(@req)
+  end
+
   # use this with the router to call action_name (:index, :show, :create...)
   def invoke_action(name)
+    self.send(name)
+    render(name) unless @already_built_response
   end
 end
