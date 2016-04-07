@@ -7,7 +7,7 @@ class Flash
   def initialize(req, res)
     @now = {}
     @cookie = {}
-    if req.cookies["flash"]
+    if req.cookies["flash"] && req.cookies["flash"] != ""
       @old_cookie = JSON.parse(req.cookies["flash"])
       res.set_cookie("flash", nil)
     end
