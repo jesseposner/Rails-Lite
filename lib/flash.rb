@@ -1,5 +1,4 @@
 require 'json'
-require 'byebug'
 
 class Flash
   attr_reader :now

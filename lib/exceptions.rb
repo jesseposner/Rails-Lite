@@ -1,5 +1,3 @@
-require 'byebug'
-
 class Exceptions
   attr_reader :app
 
