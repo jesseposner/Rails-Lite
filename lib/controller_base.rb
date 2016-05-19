@@ -38,7 +38,7 @@ class ControllerBase
 
   def render(template_name)
     file_path =
-      "./../views/#{self.class.to_s.underscore}/#{template_name}.html.erb"
+      "views/#{self.class.to_s.underscore}/#{template_name}.html.erb"
     file_content = File.read(file_path)
     template = ERB.new(file_content)
     content = template.result(binding)

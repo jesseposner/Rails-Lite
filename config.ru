@@ -1,17 +1,11 @@
-require 'rack'
-require_relative '../lib/controller_base'
-require_relative '../lib/router'
-require_relative '../lib/exceptions'
-require_relative '../lib/static_assets'
+require_relative './lib/controller_base'
+require_relative './lib/exceptions'
+require_relative './lib/static_assets'
 
 class Controller < ControllerBase
   def go
+    render :index
   end
-end
-
-router = Router.new
-
-router.draw do
 end
 
 core_app = Proc.new do |env|
@@ -27,7 +21,4 @@ app = Rack::Builder.new do
   run core_app
 end.to_app
 
-Rack::Server.start(
-  app: app,
-  Port: 3000
-)
+run app

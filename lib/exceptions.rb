@@ -19,7 +19,7 @@ class Exceptions
 
   def render(template_name)
     file_path =
-      "./../views/#{template_name}.html.erb"
+      "views/#{template_name}.html.erb"
     file_content = File.read(file_path)
     template = ERB.new(file_content)
     content = template.result(binding)
